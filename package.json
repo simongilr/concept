@@ -1,0 +1,32 @@
+{
+  "name": "concept",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^28.1.0",
+    "electron-updater": "^6.1.7"
+  },
+  "devDependencies": {
+    "electron-builder": "^22.13.1"
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "tu-usuario-github",
+        "repo": "nombre-repositorio"
+      }
+    ]
+  }
+}
+
