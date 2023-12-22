@@ -1,32 +1,34 @@
 {
   "name": "concept",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron main.js",
+    "start": "electron index.js",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "build": "electron-builder build  --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^28.1.0",
     "electron-updater": "^6.1.7"
   },
   "devDependencies": {
-    "electron-builder": "^22.13.1"
+    "electron": "^28.1.0",
+    "electron-builder": "^22.14.13"
   },
   "build": {
     "publish": [
       {
         "provider": "github",
-        "owner": "tu-usuario-github",
-        "repo": "nombre-repositorio"
+        "owner": "simongilr",
+        "repo": "https://github.com/simongilr/concept.git",
+        "token": "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"
       }
     ]
   }
 }
-
