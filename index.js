@@ -47,7 +47,7 @@ autoUpdater.setFeedURL({
   provider: 'github',
   owner: 'simongilr',
   repo: 'concept',
-  token: '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'
+  token: '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'
 });
 
 // Evento para manejar la instalación de actualizaciones

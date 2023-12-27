@@ -1,6 +1,6 @@
 {
   "name": "concept",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
         "provider": "github",
         "owner": "simongilr",
         "repo": "https://github.com/simongilr/concept.git",
-        "token": "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"
+        "token": "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"
       }
     ],
     "win": {
