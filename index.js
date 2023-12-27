@@ -1,45 +1,46 @@
 const { app, BrowserWindow, autoUpdater, ipcMain  } = require('electron');
+const path = require('node:path')
+
 const squirrelStartup = require('electron-squirrel-startup');
+let actualizacion = false;
 
-// Verifica si la aplicación se está ejecutando a través de Squirrel
-if (squirrelStartup) {
-  // Si la aplicación está en modo Squirrel, sale para evitar iniciar la aplicación
-  app.quit();
-}
-
-console.log('Abrio el index');
-
-let mainWindow;
-
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+function createWindow () {
+  const mainWindow = new BrowserWindow({
     webPreferences: {
-      nodeIntegration: true
-    },
-    show: true
-  });
+      preload: path.join(__dirname, 'preload.js')
+    }
+  })
 
+  ipcMain.on('set-title', (event, title) => {
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    win.setTitle(title)
+  })
 
-
-  mainWindow.loadFile('index.html');
-
-  mainWindow.on('closed', function () {
-    mainWindow = null;
-  });
+  mainWindow.loadFile('index.html')
 }
 
 app.whenReady().then(() => {
-  createWindow();
+  createWindow()
 
-  // ... Resto del código
+  app.on('activate', function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
 
-});
+  console.log('Entro a este punto');
+
+  ipcMain.on('request-variable', (event) => {
+    const myVariable = 'Test';
+    event.reply('response-variable', actualizacion);
+    console.log('actualizacion', actualizacion );
+  });
+})
+
 
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit();
-});
+  if (process.platform !== 'darwin') app.quit()
+})
+
 
 // Configura la URL del feed de actualizaciones
 autoUpdater.setFeedURL({
@@ -52,10 +53,7 @@ autoUpdater.setFeedURL({
 
 // Evento para manejar la instalación de actualizaciones
 autoUpdater.on('update-downloaded', () => {
-
-  console.log('EJECUTO PROCESO DE ACTUALIZACION');
-
   autoUpdater.quitAndInstall();
+  actualizacion = true;
 });
-
 
