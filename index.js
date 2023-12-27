@@ -1,4 +1,13 @@
-const { app, BrowserWindow, autoUpdater } = require('electron');
+const { app, BrowserWindow, autoUpdater, ipcMain  } = require('electron');
+const squirrelStartup = require('electron-squirrel-startup');
+
+// Verifica si la aplicación se está ejecutando a través de Squirrel
+if (squirrelStartup) {
+  // Si la aplicación está en modo Squirrel, sale para evitar iniciar la aplicación
+  app.quit();
+}
+
+console.log('Abrio el index');
 
 let mainWindow;
 
@@ -8,8 +17,11 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    show: true
   });
+
+
 
   mainWindow.loadFile('index.html');
 
@@ -21,18 +33,8 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
 
-  // Verifica manualmente las actualizaciones
-  autoUpdater.checkForUpdates().then((updateInfo) => {
-    if (updateInfo.version) {
-      // Aquí puedes mostrar una notificación o manejar la actualización de alguna manera
-      console.log(`Nueva versión disponible: ${updateInfo.version}`);
-      // Puedes agregar código para notificar al usuario o realizar acciones adicionales
-    }
-  });
+  // ... Resto del código
 
-  app.on('activate', function () {
-    if (mainWindow === null) createWindow();
-  });
 });
 
 app.on('window-all-closed', function () {
@@ -48,9 +50,12 @@ autoUpdater.setFeedURL({
   token: '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'
 });
 
-
 // Evento para manejar la instalación de actualizaciones
 autoUpdater.on('update-downloaded', () => {
+
+  console.log('EJECUTO PROCESO DE ACTUALIZACION');
+
   autoUpdater.quitAndInstall();
 });
+
 

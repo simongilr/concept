@@ -1,6 +1,6 @@
 {
   "name": "concept",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,15 @@
     "start": "electron index.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "build": "electron-builder build  --win --publish never",
-    "deploy": "electron-builder build --win --publish always"
+    "build": "electron-builder --win",
+    "deploy": "electron-builder --win",
+    "start:squirrel": "electron . --squirrel-install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^6.1.7"
   },
   "devDependencies": {
@@ -29,6 +31,18 @@
         "repo": "https://github.com/simongilr/concept.git",
         "token": "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"
       }
-    ]
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "path/to/your/icon.ico"
+    }
   }
 }
